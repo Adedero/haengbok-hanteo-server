@@ -69,7 +69,7 @@ router.get('/app-download', (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     catch (e) {
         winston_config_1.default.error(e);
-        res.status(500).render('pagees/server-error');
+        res.status(500).render('pages/server-error', { error: e });
     }
 }));
 exports.default = router;

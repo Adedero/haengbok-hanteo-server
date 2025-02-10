@@ -68,7 +68,7 @@ router.get('/app-download', async (req, res) => {
     res.render('pages/app-download', { settings: updatedSettings })
   } catch(e) {
     logger.error(e)
-    res.status(500).render('pagees/server-error')
+    res.status(500).render('pages/server-error', { error: e })
   }
 })
 
