@@ -1,0 +1,53 @@
+<header id="main-header" class="border-b border-b-stone-200 sticky w-full top-0 z-10 bg-white/20 backdrop-blur-sm py-4 px-4 md:px-6 h-[3.5rem] flex items-center justify-between">
+  <div class="flex items-center gap-8">
+    <a href="/" class="flex items-center gap-1">
+      <%- include('../icons/logo', { size: '22' }) %>
+      <span class="hidden lg:block font-semibold md:text-lg translate-y-0.5"><%= __('app.name') %></span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-4">
+      <div class="border border-primary-500 rounded-md py-1 px-[0.25rem] flex items-center  text-xs font-medium">
+        <a class="lang py-1 px-2 rounded <% if (currentLocale === 'ko') { %> active <% } %>" href="?lang=ko">한국인</a>
+        <a class="lang py-1 px-2 rounded <% if (currentLocale === 'en') { %> active <% } %>" href="?lang=en">English</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <div class="flex items-center gap-4 md:hidden">
+      <div class="border border-primary-500 rounded-md py-1 px-[0.25rem] flex items-center gap-1 text-xs font-medium">
+        <a class="lang py-1 px-2 rounded <% if (currentLocale === 'ko') { %> active <% } %>" href="?lang=ko">한국인</a>
+        <a class="lang py-1 px-2 rounded <% if (currentLocale === 'en') { %> active <% } %>" href="?lang=en">English</a>
+      </div>
+    </div>
+
+    <div id="nav" class="relative w-0 opacity-0 h-0 overflow-hidden transition-all md:opacity-100 md:w-fit md:h-fit md:flex md:items-center md:overflow-visible">
+      <div class="md:hidden absolute top-4 right-4">
+        <button id="close-btn" class="cursor-pointer hover:text-primary-500">
+          <span class="material-symbols-rounded" style="font-size: 2rem;">close</span>
+        </button>
+      </div>
+
+      <div class="md:hidden my-6 flex-col-center">
+        <%- include('../icons/logo', { size: '35' }) %>
+        <span class="font-semibold uppercase"><%= __('app.name') %></span>
+      </div>
+  
+      <a data-nav href="/"><%= __('home') %></a>
+      <a data-nav href="/about"><%= __('about') %></a>
+      <a data-nav href="/contact-us"><%= __('contactUs') %></a>
+
+      <a href="/app-download">
+        <button class="btn primary rounded-md"><%= __('getApp') %></button>
+      </a>
+      
+    </div>
+  
+    <button
+      class="md:hidden border border-primary-500 text-primary-500 rounded-md flex-center px-1.5 py-1 cursor-pointer hover:bg-primary-50 transition-colors"
+      id="menu-btn"
+    >
+      <span class="material-symbols-rounded">menu</span>
+    </button>
+  </div>
+</header>

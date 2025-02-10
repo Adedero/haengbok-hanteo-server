@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="<%= currentLocale %>">
+  <%-
+    include('../partials/head', {
+      title: 'Haengbok Hanteo - Download',
+      head: null
+    })
+  %>
+  <body class="bg-stone-50"> 
+    <%- /* include('./partials/_loader') */ %>
+    <%- include('../partials/header') %>
+    <main>
+      <!-- HEADER SECTION -->
+      <section class="relative z-[1] h-60 px-4 md:px-6 py-4">
+
+        <div class="absolute -z-[1] w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] h-[calc(100%-2rem)] rounded-lg overflow-hidden bg-slate-300">
+          <img src="/img/building-6.jpg" class="w-full h-full object-cover brightness-80">
+        </div>
+
+        <div class="text-white w-full h-full flex-col-center gap-4 text-center px-2">
+          <h1 class="text-4xl md:text-5xl font-semibold">
+            <%= __('page.download.header') %>
+          </h1>
+          <p class="text-sm max-w-80 font-medium">
+            <%= __('page.download.subheader') %>
+          </p>
+        </div>
+      </section>
+
+      <section id="trends" class="px-4 py-4 md:px-10">
+        <div class="mt-10 w-full grid md:grid-cols-5 lg:grid-cols-3 gap-5">
+
+          <div class="md:col-span-3 lg:col-span-2">
+            <h2 class="text-3xl md:text-4xl font-semibold text-balance">
+              <%= __('page.download.downloadApp') %>
+            </h2>
+
+            <div class="mt-2">
+              <span><%= __('page.download.version') %>: </span>
+              <span class="font-semibold">v<%= settings?.appDetails.version %></span>
+            </div>
+
+            <div>
+              <span><%= __('page.download.releaseDate') %>: </span>
+              <span class="font-semibold"><%= settings?.appDetails.releaseDate %></span>
+            </div>
+
+            <div class="mt-8 grid gap-8">
+              <p class="text-balance">
+                <%= __('page.download.description') %>
+              </p>
+
+              <div>
+                <p class="text-2xl font-semibold">
+                  <%= __('page.download.features') %>
+                </p>
+                <ul class="list-disc list-inside">
+                  <li><%= __('page.download.feature_1') %></li>
+                  <li><%= __('page.download.feature_2') %></li>
+                  <li><%= __('page.download.feature_3') %></li>
+                  <li><%= __('page.download.feature_4') %></li>
+                </ul>
+              </div>
+
+              <div>
+                <p class="text-2xl font-semibold">
+                  <%= __('page.download.requirements') %>
+                </p>
+                <ul class="list-disc list-inside">
+                  <li><%= __('page.download.requirement_1') %></li>
+                  <li><%= __('page.download.requirement_2') %></li>
+                  <li><%= __('page.download.requirement_3') %></li>
+                </ul>
+              </div>
+
+              <div>
+                <a href="/" download="haengbok-hanteo.apk">
+                  <button class="btn primary rounded-md flex items-center gap-2">
+                    <span class="pi pi-download"></span>
+                    <span><%= __('download') %></span>
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-2 lg:col-span-1 flex-center">
+            <div class="rounded-2xl h-[40rem] w-[min(100%,24rem)] bg-stone-200 overflow-hidden">
+              <img src="/img/app-<%= currentLocale %>.jpg" alt="app screen" class="w-full h-full object-cover">
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+     
+    </main>
+    <%- include('../partials/footer') %>
+
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

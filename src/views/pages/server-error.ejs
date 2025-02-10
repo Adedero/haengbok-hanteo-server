@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="<%= currentLocale %>">
+  <%-
+    include('../partials/head', {
+      title: 'Haengbok Hanteo - 404',
+      head: null
+    })
+  %>
+  <body class="bg-stone-50"> 
+    <%- /* include('./partials/_loader') */ %>
+    <%- include('../partials/header') %>
+    <main>
+      <!-- HEADER SECTION -->
+      <section class="relative z-[1] h-60 px-4 md:px-6 py-4">
+
+        <div class="absolute -z-[1] w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] h-[calc(100%-2rem)] rounded-lg overflow-hidden">
+          <img src="/img/building-7.jpg" class="w-full h-full object-cover brightness-70">
+        </div>
+
+        <div class="text-white w-full h-full flex-col-center gap-4 text-center px-2">
+          <h1 class="text-4xl md:text-5xl font-semibold">500</h1>
+          <p class="text-sm max-w-80 font-medium">
+            <%= __('serverError') %>
+          </p>
+        </div>
+      </section>
+
+      <section id="trends" class="px-4 py-4 md:px-10">
+        <div class="mt-10 flex-col-center">
+          
+
+          <div class="w-full max-w-[36rem]">
+            <div class="text-lg font-semibold text-center">
+              <span class="pi pi-times-circle text-mute" style="font-size: 2rem"></span>
+              <p>
+                <%= __('somethingHappened') %>
+              </p>
+            </div>
+
+            <div class="mt-10 flex-center gap-2">
+              <button data-back-btn class="btn secondary rounded-md flex items-center gap-2">
+                <span class="pi pi-replay"></span>
+                <span class="translate-y-[1px]"><%= __('back') %></span>
+              </button>
+
+              <a href="/">
+                <button class="btn primary rounded-md flex items-center gap-2">
+                  <span class="pi pi-home"></span>
+                  <span class="translate-y-[1px]"><%= __('home') %></span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+     
+    </main>
+    <%- include('../partials/footer') %>
+
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

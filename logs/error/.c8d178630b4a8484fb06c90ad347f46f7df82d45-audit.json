@@ -1,0 +1,15 @@
+{
+  "keep": {
+    "days": true,
+    "amount": 14
+  },
+  "auditLog": "C:\\Users\\cosmo\\Documents\\workspace\\haengbok-hanteo\\server\\logs\\error\\.c8d178630b4a8484fb06c90ad347f46f7df82d45-audit.json",
+  "files": [
+    {
+      "date": 1733913367498,
+      "name": "C:\\Users\\cosmo\\Documents\\workspace\\haengbok-hanteo\\server\\logs\\error\\error-2024-12-11.log",
+      "hash": "47e050ebaa09a2b60a5c6cbfea08177cc3177e38e43a5215c1156e0815f6399a"
+    }
+  ],
+  "hashType": "sha256"
+}

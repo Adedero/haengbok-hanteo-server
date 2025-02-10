@@ -1,0 +1,30 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\Chike\\Documents\\adedero\\hanteo\\server\\logs\\error\\.a6b6fdf7152c7503bd372af246022dac3c3f1cdf-audit.json",
+    "files": [
+        {
+            "date": 1734140910112,
+            "name": "C:\\Users\\Chike\\Documents\\adedero\\hanteo\\server\\logs\\error\\error-2024-12-13.log",
+            "hash": "983a518b0081acff340fe4bfd1233891e4e36553d2ce2f3fdd1e065ee22f8055"
+        },
+        {
+            "date": 1734293537801,
+            "name": "C:\\Users\\Chike\\Documents\\adedero\\hanteo\\server\\logs\\error\\error-2024-12-15.log",
+            "hash": "4db52be6e44d99123a39d73fb3b52be5edb9492c5e9e94ef256b75e03673fde0"
+        },
+        {
+            "date": 1734343188457,
+            "name": "C:\\Users\\Chike\\Documents\\adedero\\hanteo\\server\\logs\\error\\error-2024-12-16.log",
+            "hash": "272e744b40b821393a68ebb1e84d7f4d40dc72878d0e98d420356fa7959be365"
+        },
+        {
+            "date": 1734422563575,
+            "name": "C:\\Users\\Chike\\Documents\\adedero\\hanteo\\server\\logs\\error\\error-2024-12-17.log",
+            "hash": "86841ab74861018153ff6563519bea1f52cecaf6edfe685e58791b98a9c23ccf"
+        }
+    ],
+    "hashType": "sha256"
+}

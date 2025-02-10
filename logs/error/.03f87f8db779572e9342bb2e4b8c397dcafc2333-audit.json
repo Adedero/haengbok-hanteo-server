@@ -1,0 +1,25 @@
+{
+  "keep": {
+    "days": true,
+    "amount": 14
+  },
+  "auditLog": "C:\\Users\\Chike\\Documents\\adedero\\haengbok-hanteo\\server\\logs\\error\\.03f87f8db779572e9342bb2e4b8c397dcafc2333-audit.json",
+  "files": [
+    {
+      "date": 1733751220718,
+      "name": "C:\\Users\\Chike\\Documents\\adedero\\haengbok-hanteo\\server\\logs\\error\\error-2024-12-09.log",
+      "hash": "02a9eae8a0029b5ffcd2dd28ab03c7b5870e0bb551ea164cdff22c47016335be"
+    },
+    {
+      "date": 1733825970729,
+      "name": "C:\\Users\\Chike\\Documents\\adedero\\haengbok-hanteo\\server\\logs\\error\\error-2024-12-10.log",
+      "hash": "1346dd96691108fe597c1f50adc5526cc779c07082120c632e923ab018540100"
+    },
+    {
+      "date": 1733906113368,
+      "name": "C:\\Users\\Chike\\Documents\\adedero\\haengbok-hanteo\\server\\logs\\error\\error-2024-12-11.log",
+      "hash": "23919439d2c05fcc2b72197c8341d7297ff695b474e876954a78a66e4b6b509d"
+    }
+  ],
+  "hashType": "sha256"
+}

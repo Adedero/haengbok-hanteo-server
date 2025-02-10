@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="<%= currentLocale %>">
+  <%-
+    include('../partials/head', {
+      title: 'Haengbok Hanteo - About',
+      head: null
+    })
+  %>
+  <body class="bg-stone-50"> 
+    <%- include('../partials/header') %>
+    <main>
+      <!-- HEADER SECTION -->
+      <section class="relative z-[1] h-60 px-4 md:px-6 py-4">
+
+        <div class="absolute -z-[1] w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] h-[calc(100%-2rem)] rounded-lg overflow-hidden">
+          <img src="/img/building-5.jpg" class="w-full h-full object-cover brightness-70">
+        </div>
+
+        <div class="text-white w-full h-full flex-col-center gap-4 text-center px-2">
+          <h1 class="text-4xl md:text-5xl font-semibold">
+            <%= __('page.about.header') %>
+          </h1>
+          <p class="text-sm max-w-80 font-medium">
+            <%= __('page.about.subheader') %>
+          </p>
+        </div>
+      </section>
+
+      <section id="trends" class="px-4 py-4 md:px-10">
+        <div class="mt-10 flex-col-center">
+          <h2 class="text-3xl md:text-4xl font-semibold text-center">
+            <%= __('page.about.description') %>
+          </h2>
+
+          <div class="mt-4 w-full max-w-[36rem]">
+            <p class="whitespace-pre-wrap"><%= __('page.about.text') %></p>
+
+            <div class="mt-5 grid grid-cols-3 gap-3 h-60 md:h-96">
+              <div class="rounded-lg h-full bg-stone-200 overflow-hidden">
+                <img src="/img/building-6.jpg" class="w-full h-full object-cover">
+              </div>
+              <div class="relative rounded-lg h-full bg-stone-200 overflow-hidden">
+                <img src="/img/building-7.jpg" class="w-full h-full object-cover">
+              </div>
+              <div class="rounded-lg h-full bg-stone-200 overflow-hidden">
+                <img src="/img/building-8.jpg" class="w-full h-full object-cover">
+              </div>
+            </div>
+
+            <div class="mt-10 flex-col-center gap-1">
+              <%- include('../icons/logo', { size: '35' }) %>
+              <p class="font-bold uppercase"><%= __('app.name') %></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+     
+    </main>
+    <%- include('../partials/footer') %>
+
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

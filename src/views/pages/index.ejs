@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="<%= currentLocale %>">
+  <%-
+    include('../partials/head', {
+      title: 'Haengbok Hanteo - Home',
+      head: null
+    })
+  %>
+  <body class="bg-stone-50"> 
+    <%- include('../partials/header') %>
+    <main>
+      <!-- HERO SECTION -->
+      <section id="hero" class="relative z-[1] h-[32rem] md:h-[calc(100vh-3.5rem)] px-4 md:px-6 py-4">
+        <div class="absolute -z-[1] w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] h-[calc(100%-2rem)] rounded-lg overflow-hidden bg-slate-300">
+          <img src="/img/building-1.jpg" class="w-full h-full object-cover brightness-80">
+        </div>
+
+        <div class="w-full h-full flex-col-center gap-6 text-center px-2">
+          <h1 class="text-3xl md:text-4xl font-semibold text-white"><%= __('app.motto') %></h1>
+          <p class="text-xs md:text-sm md:w-[28rem] p-4 bg-white/30 backdrop-blur-sm rounded-lg border border-white/20 shadow">
+            <%= __('page.home.intro') %>
+          </p>
+          <div class="flex items-center gap-2">
+            <a href="/about">
+              <button class="btn secondary rounded-md flex items-center gap-2">
+                <span class="pi pi-info-circle"></span>
+                <%= __('about') %>
+              </button>
+            </a>
+    
+            <a href="/app-download">
+              <button class="btn primary rounded-md flex items-center gap-2">
+                <span class="pi pi-android"></span>
+                <%= __('getApp') %>
+              </button>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- METRICS SECTION -->
+       <section id="metrics" class="px-4 py-4 md:px-10">
+        <div class="mt-10 grid md:grid-cols-2 gap-3">
+          <div>
+            <h2 class="text-3xl md:text-4xl font-semibold">
+              <%= __('page.home.metricsSectionHeader') %>
+            </h2>
+          </div>
+
+          <div class="md:text-right text-xs flex-center text-balance">
+            <%= __('page.home.metricsSectionSubheader') %>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-3">
+            <div class="rounded-lg p-4 bg-white">
+              <div class="grid gap-4">
+                <h3 class="text-3xl md:text-4xl font-medium">40k</h3>
+                <p class="text-sm">
+                  <%= __('page.home.satisfiedCustomers') %>
+                </p>
+              </div>
+            </div>
+
+            <div class="rounded-lg p-4 bg-primary-500 text-white">
+              <div class="grid gap-4">
+                <h3 class="text-3xl md:text-4xl font-medium">25+</h3>
+                <p class="text-sm">
+                  <%= __('page.home.yearsOfExperience') %>
+                </p>
+              </div>
+            </div>
+
+            <div class="rounded-lg p-4 bg-stone-100">
+              <div class="grid gap-4">
+                <h3 class="text-3xl md:text-4xl font-medium">50+</h3>
+                <p class="text-sm">
+                  <%= __('page.home.awardsWon') %>
+                </p>
+              </div>
+            </div>
+
+            <div class="rounded-lg p-4 bg-stone-200">
+              <div class="grid gap-4">
+                <h3 class="text-3xl md:text-4xl font-medium">120+</h3>
+                <p class="text-sm">
+                  <%= __('page.home.investmentOpportunities') %>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-5 rounded-lg bg-stone-200 p-2">
+            <div class="text-sm flex flex-col gap-10 justify-between">
+              <p class="font-medium">
+                <%= __('page.home.metricsSectionImagePreviewText') %>
+              </p>
+              <div>
+                <a href="/contact-us">
+                  <button class="btn primary rounded-md">
+                    <%= __('contactUs') %>
+                  </button>
+                </a>
+              </div>
+            </div>
+
+            <div class="bg-stone-200 rounded-lg overflow-hidden">
+              <img src="/img/building-2.jpg" class="h-full w-full object-cover">
+            </div>
+          </div>
+        </div>
+       </section>
+
+       <!-- PROPERTIES SECTION -->
+        <section id="properties" class="px-4 py-4 md:px-10">
+          <div class="mt-10 grid md:grid-cols-2 gap-3">
+            <div>
+              <h2 class="text-3xl md:text-4xl font-semibold text-balance">
+                <%= __('page.home.propertySectionHeader') %>
+              </h2>
+            </div>
+  
+            <div class="md:text-right text-xs flex-center text-balance">
+              <%= __('page.home.propertySectionSubheader') %>
+            </div>
+
+            <div class="mt-5 md:col-span-2 grid grid-cols-4 gap-3 h-dvh md:h-[30rem]">
+              <div class="relative col-span-4 md:col-span-2 row-span-2 md:row-span-2 bg-[url('/img/building-1.jpg')] bg-no-repeat bg-cover bg-stone-200 rounded-lg">
+                <span class="absolute top-4 right-4 bg-white p-2.5 rounded-full pi pi-heart text-stone-600"></span>
+                <div class="bg-stone-900 text-white rounded-lg absolute bottom-4 left-4 w-[calc(100%-4rem)] p-4">
+                  <div class="flex items-center gap-2 justify-between">
+                    <p class="font-semibold">₩ 1,680,000</p>
+                    <span class="block bg-primary-500 rounded-full p-2.5 pi pi-arrow-up-right"></span>
+                  </div>
+                  <div class="text-xs">
+                    <p class="w-72 text-balance">
+                      <%= __('page.home.sampleAddress') %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative col-span-4 md:col-span-2 row-span-2 md:row-span-1 bg-[url('/img/building-3.jpg')] bg-no-repeat bg-cover bg-stone-200 rounded-lg">
+                <span class="absolute top-4 right-4 bg-white p-2.5 rounded-full pi pi-heart text-stone-600"></span>
+              </div>
+
+              <div class="relative col-span-2 md:col-span-1 md:row-span-1 bg-[url('/img/building-4.jpg')] bg-no-repeat bg-cover bg-stone-200 rounded-lg">
+                <span class="absolute top-4 right-4 bg-white p-2.5 rounded-full pi pi-heart text-stone-600"></span>
+              </div>
+
+              <div class="relative col-span-2 md:col-span-1 md:row-span-1 bg-[url('/img/building-5.jpg')] bg-no-repeat bg-cover bg-stone-200 rounded-lg">
+                <span class="absolute top-4 right-4 bg-white p-2.5 rounded-full pi pi-heart text-stone-600"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TRENDS SECTION -->
+        <section id="trends" class="px-4 py-4 md:px-10">
+          <div class="mt-10 grid md:grid-cols-2 gap-3 text-balance">
+            <div>
+              <h2 class="text-3xl md:text-4xl font-semibold">
+                <%= __('page.home.trendsSectionHeader') %>
+              </h2>
+            </div>
+
+            <div class="md:text-right text-xs flex-center">
+              <%= __('page.home.trendsSectionSubheader') %>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-3 gap-3 h-60 md:h-96">
+            <div class="rounded-lg h-full bg-stone-200 overflow-hidden">
+              <img src="/img/building-6.jpg" class="w-full h-full object-cover">
+            </div>
+            <div class="relative rounded-lg h-full bg-stone-200 overflow-hidden">
+              <img src="/img/building-7.jpg" class="w-full h-full object-cover">
+              <div class="hidden md:grid bg-stone-900 text-white rounded-lg absolute bottom-4 left-4 w-[calc(100%-2rem)] p-4 gap-2">
+                <div class="flex items-center gap-2 justify-end">
+                  <span class="block bg-primary-500 rounded-full p-2.5 pi pi-arrow-up-right"></span>
+                </div>
+                <div class="text-xs">
+                  <p>
+                    <%= __('page.home.sampleTrend') %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="rounded-lg h-full bg-stone-200 overflow-hidden">
+              <img src="/img/building-8.jpg" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section id="testimonials" class="px-4 py-4 md:px-10">
+          <div class="mt-10 text-center flex-col-center">
+            <h2 class="text-3xl md:text-4xl font-semibold">
+              <%= __('page.home.testimonialsSectionHeader') %>
+            </h2>
+            <p class="mt-2 md:max-w-[30rem] text-balance text-center">
+              <%= __('page.home.testimonialsSectionSubheader') %>
+            </p>
+
+            <div class="mt-20 grid gap-x-3 gap-y-20 md:grid-cols-2">
+
+              <% for( let i = 0; i < 4; i++ ) { %>
+                <div class="relative h-fit">
+                  <div class="w-20 aspect-square rounded-full overflow-hidden border-2 border-stone-50 bg-stone-200 absolute left-5 -top-10">
+                    <img src="/img/testimonials/person-<%= i + 1 %>.jpg" class="w-full h-full object-cover">
+                  </div>
+                  <div class="rounded-lg min-h-40 bg-stone-100 p-3">
+                    <div class="text-left mt-10 w-full">
+                      <p class="text-sm">
+                        <%= __(`page.home.testimonial_${ i + 1 }`) %>
+                      </p>
+  
+                      <p class="text-sm font-semibold mt-5">
+                        <%= __(`page.home.testimonial_name_${ i + 1 }`) %>
+                      </p>
+                      <div class="mt-1 flex items-center gap-1 *:text-amber-500">
+                        <span class="pi pi-star-fill" style="font-size: 0.8rem;"></span>
+                        <span class="pi pi-star-fill" style="font-size: 0.8rem;"></span>
+                        <span class="pi pi-star-fill" style="font-size: 0.8rem;"></span>
+                        <span class="pi pi-star-fill" style="font-size: 0.8rem;"></span>
+                        <span class="pi pi-star-fill" style="font-size: 0.8rem;"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="absolute right-3 bottom-0">
+                    <svg fill="var(--color-stone-300)" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" width="50" height="50">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>quote</title> <path d="M9.563 8.469l-0.813-1.25c-5.625 3.781-8.75 8.375-8.75 12.156 0 3.656 2.688 5.375 4.969 5.375 2.875 0 4.906-2.438 4.906-5 0-2.156-1.375-4-3.219-4.688-0.531-0.188-1.031-0.344-1.031-1.25 0-1.156 0.844-2.875 3.938-5.344zM21.969 8.469l-0.813-1.25c-5.563 3.781-8.75 8.375-8.75 12.156 0 3.656 2.75 5.375 5.031 5.375 2.906 0 4.969-2.438 4.969-5 0-2.156-1.406-4-3.313-4.688-0.531-0.188-1-0.344-1-1.25 0-1.156 0.875-2.875 3.875-5.344z"></path>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </section>
+    </main>
+    <%- include('../partials/footer') %>
+
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\.8824ce5cfecc890c865d7782b806b3c9d7bd6a79-audit.json",
+    "files": [
+        {
+            "date": 1734181213081,
+            "name": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\info-2024-12-14.log",
+            "hash": "be8d10d342d1e5697b750b82d01ec736ec0c010bf010e1a7a3428e42c726ab06"
+        },
+        {
+            "date": 1734432201649,
+            "name": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\info-2024-12-17.log",
+            "hash": "73ec0ebfec2ce84a4ff27558849404a325207c0bd506dcf140f9f4abd7395e0f"
+        },
+        {
+            "date": 1734476745347,
+            "name": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\info-2024-12-18.log",
+            "hash": "5f554283ad4ed2bb16259bb47664eb3d185e22143a6768d89306cd2649877bdd"
+        },
+        {
+            "date": 1734611656212,
+            "name": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\info-2024-12-19.log",
+            "hash": "970c91e09914634575d624869ac130aec16eebb0d17e8ef998ab2381c5216187"
+        },
+        {
+            "date": 1734727150522,
+            "name": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\info-2024-12-20.log",
+            "hash": "f210c7a931b5eb4ca2c8c419181bd9cdc8a77ed7cdbcee5969fad96861e3e615"
+        },
+        {
+            "date": 1734904799762,
+            "name": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\info-2024-12-22.log",
+            "hash": "423f19e1ea31f27ee7b7a17ac4b8e52d1c2595e44422c3e027f1b6cee046c46c"
+        },
+        {
+            "date": 1734910148227,
+            "name": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\info-2024-12-23.log",
+            "hash": "caa88ae913b473c7f63012ab8d2ad7ca5181a7f629d685c70a0b922bc5576e88"
+        },
+        {
+            "date": 1734996457534,
+            "name": "C:\\Users\\cosmo\\Documents\\workspace\\hanteo\\server\\logs\\info\\info-2024-12-24.log",
+            "hash": "a3969ef69f4e82f84116882d7c29fb2df29966dc04cde44ac596c11d61724f7b"
+        }
+    ],
+    "hashType": "sha256"
+}

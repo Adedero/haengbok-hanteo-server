@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="<%= currentLocale %>">
+  <%-
+    include('../partials/head', {
+      title: 'Haengbok Hanteo - Contact Us',
+      head: null
+    })
+  %>
+  <body class="bg-stone-50"> 
+    <%- include('../partials/header') %>
+    <main class="relative">
+      <section class="relative z-[1] h-60 px-4 md:px-6 py-4">
+
+        <div class="absolute -z-[1] w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] h-[calc(100%-2rem)] rounded-lg overflow-hidden">
+          <img src="/img/building-7.jpg" class="w-full h-full object-cover brightness-70">
+        </div>
+
+        <div class="text-white w-full h-full flex-col-center gap-4 text-center px-2">
+          <h1 class="text-4xl md:text-5xl font-semibold">
+            <%= __('page.contactUs.header') %>
+          </h1>
+          <p class="text-sm max-w-80 font-medium">
+            <%= __('page.contactUs.subheader') %>
+          </p>
+        </div>
+      </section>
+
+      <section id="contact-form" class="px-4 py-4 md:px-10">
+        <div class="mt-10 flex-col-center">
+          <h2 class="text-3xl md:text-4xl font-semibold text-center">
+            <%= __('page.contactUs.sendUsAnEmail') %>
+          </h2>
+
+          <div class="mt-2">
+            <a href="mailto:contact@haengbokhanteo.com" class="font-semibold text-primary-600 hover:underline flex items-center gap-2">
+              <span class="pi pi-envelope"></span>
+              <span>contact@haengbokhanteo.com</span>
+            </a>
+          </div>
+
+          <div class="mt-10 w-full max-w-[24rem]">
+            <form action="/contact-us" method="post">
+              <div class="w-full grid gap-6 bg-white rounded-xl p-4 md:shadow">
+                <div>
+                  <h1 class="text-primary-500 font-semibold text-2xl">
+                    <%= __('page.contactUs.contactForm') %>
+                  </h1>
+                </div>
+
+                <div class="grid gap-1">
+                  <label for="full-name" class="text-sm font-semibold text-mute">
+                    <span><%= __('page.contactUs.fullName') %></span>
+                    <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="full-name"
+                    name="fullName"
+                    required
+                    class="min-w-0 w-full outline-0 px-2 py-2 border border-stone-400 rounded focus:border-primary-500 font-medium"
+                  >
+                </div>
+
+                <div class="grid gap-1">
+                  <label for="email-address" class="text-sm font-semibold text-mute">
+                    <span><%= __('page.contactUs.emailAddress') %></span>
+                    <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email-address"
+                    name="email"
+                    required
+                    class="min-w-0 w-full outline-0 px-2 py-2 border border-stone-400 rounded focus:border-primary-500 font-medium"
+                  >
+                </div>
+
+                <div class="grid gap-1">
+                  <label for="subject" class="text-sm font-semibold text-mute">
+                    <span><%= __('page.contactUs.subject') %></span>
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    class="min-w-0 w-full outline-0 px-2 py-2 border border-stone-400 rounded focus:border-primary-500 font-medium"
+                  >
+                </div>
+
+                <div class="grid gap-1">
+                  <label for="message" class="text-sm font-semibold text-mute">
+                    <span><%= __('page.contactUs.message') %></span>
+                    <span class="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="8"
+                    required
+                    class="resize-none min-w-0 w-full outline-0 px-2 py-2 border border-stone-400 rounded focus:border-primary-500 font-medium"
+                  ></textarea>
+                </div>
+
+                <div>
+                  <button type="submit" class="btn primary rounded-md w-full flex-center gap-2">
+                    <span class="pi pi-send"></span>
+                    <span><%= __('send') %></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div class="mt-10 flex-col-center gap-1">
+              <%- include('../icons/logo', { size: '35' }) %>
+              <p class="font-bold uppercase"><%= __('app.name') %></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/footer') %>
+
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

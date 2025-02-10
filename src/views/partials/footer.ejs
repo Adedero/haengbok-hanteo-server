@@ -1,0 +1,51 @@
+<footer class="pt-20 px-4 py-8">
+  <div class="bg-stone-900 rounded-lg w-full p-4 text-white">
+    <div class="mt-10 flex flex-wrap items-center justify-between gap-5">
+      <div class="grid gap-2">
+        <h1 class="text-3xl md:text-4xl font-semibold">
+          <%= __('footerHeader') %>
+        </h1>
+        <p class="text-xs text-stone-300">
+          <%= __('footerSubheader') %>
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="/contact-us">
+          <button class="btn secondary rounded-md text-stone-900"><%=  __('contactUs') %></button>
+        </a>
+
+        <a href="/app-download">
+          <button class="btn primary rounded-md"><%= __('getApp') %></button>
+        </a>
+      </div>
+    </div>
+
+    <hr class="my-5 border-stone-600" />
+
+    <div class="flex flex-wrap items-center justify-between gap-5">
+      <div>
+        <div class="flex items-center">
+          <%- include('../icons/logo', { size: '35', fill: 'va(--stone-900)' }) %>
+          <p class="font-semibold md:text-lg translate-y-0.5"><%= __('app.name') %></p>
+        </div>
+        <p class="text-xs max-w-60 text-stone-300">
+          &copy; 2020 <%= __('app.name') %>. <%= __('allRightsReserved') %>
+        </p>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs text-stone-300">
+        <a href="/" class="font-medium hover:underline hover:text-white">
+          <%= __('home') %>
+        </a>
+        <a href="/about" class="font-medium hover:underline hover:text-white">
+          <%= __('about') %>
+        </a>
+        <a href="/contact-us" class="font-medium hover:underline hover:text-white">
+          <%= __('contactUs') %>
+        </a>
+      </div>
+    </div>
+    
+  </div>
+</footer>
