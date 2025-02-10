@@ -4,7 +4,7 @@ import path from 'node:path'
 i18n.configure({
   locales: ["en", "ko"],
   defaultLocale: "ko",
-  directory: path.join(__dirname, "locales"),
+  directory: path.resolve("locales"),
   queryParameter: "lang", // Allows ?lang=fr
   cookie: "locale", // Saves user preference in a cookie
   autoReload: true, // Reload translations automatically

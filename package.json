@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc && npx @tailwindcss/cli -i build.css -o ./public/styles/main.css",
-    "server": "tsc && node dist/index.js",
+    "server": "node dist/index.js",
     "start": "nodemon src/index.ts",
     "build:css": "npx @tailwindcss/cli -i build.css -o ./public/styles/main.css --watch",
     "dev": "concurrently \"npm run start\" \"npm run build:css\"",

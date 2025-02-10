@@ -8,7 +8,7 @@ const node_path_1 = __importDefault(require("node:path"));
 i18n_1.default.configure({
     locales: ["en", "ko"],
     defaultLocale: "ko",
-    directory: node_path_1.default.join(__dirname, "locales"),
+    directory: node_path_1.default.resolve("locales"),
     queryParameter: "lang", // Allows ?lang=fr
     cookie: "locale", // Saves user preference in a cookie
     autoReload: true, // Reload translations automatically
