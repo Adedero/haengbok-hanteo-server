@@ -858,6 +858,9 @@
   .bg-primary-500 {
     background-color: var(--color-primary-500);
   }
+  .bg-red-500 {
+    background-color: var(--color-red-500);
+  }
   .bg-slate-300 {
     background-color: var(--color-slate-300);
   }

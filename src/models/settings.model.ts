@@ -14,6 +14,7 @@ export interface SettingsModel extends Document {
   hideBalance: boolean;
   lang: 'en' | 'ko' | 'th';
   darkMode: boolean;
+  contactAddress: string;
   appDetails: AppDetails;
 }
 
@@ -50,6 +51,9 @@ const settingsSchema = new Schema<SettingsModel>(
       type: Boolean,
       required: true,
       default: false, // Default value for darkMode
+    },
+    contactAddress: {
+      type: String,
     },
     appDetails: {
       type: appDetailsSchema, // Reference the subschema

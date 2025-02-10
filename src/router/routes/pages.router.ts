@@ -15,8 +15,14 @@ router.get('/about', (req, res) => {
   res.render('pages/about')
 })
 
-router.get('/contact-us', (req, res) => {
-  res.render('pages/contact')
+router.get('/contact-us', async (req, res) => {
+  try {
+    const settings = await Settings.findOne({}).lean()
+    res.render('pages/contact', { contactAddres: settings?.contactAddress ?? 'info@haengbokhanteo.com'})
+  } catch (e) {
+    logger.error(e)
+    res.status(500).render('pages/server-error', { error: e })
+  }
 })
 
 router.post('/contact-us', async (req, res) => {
@@ -43,7 +49,7 @@ router.post('/contact-us', async (req, res) => {
     res.render('pages/success')
   } catch(e) {
     logger.error(e)
-    res.status(500).render('pages/server-error')
+    res.status(500).render('pages/server-error', { error: e })
   }
 })
 

@@ -31,6 +31,9 @@ const settingsSchema = new mongoose_1.Schema({
         required: true,
         default: false, // Default value for darkMode
     },
+    contactAddress: {
+        type: String,
+    },
     appDetails: {
         type: appDetailsSchema, // Reference the subschema
         required: true,

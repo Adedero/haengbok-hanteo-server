@@ -25,9 +25,17 @@ router.get('/', (req, res) => {
 router.get('/about', (req, res) => {
     res.render('pages/about');
 });
-router.get('/contact-us', (req, res) => {
-    res.render('pages/contact');
-});
+router.get('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const settings = yield settings_model_1.default.findOne({}).lean();
+        res.render('pages/contact', { contactAddres: (_a = settings === null || settings === void 0 ? void 0 : settings.contactAddress) !== null && _a !== void 0 ? _a : 'info@haengbokhanteo.com' });
+    }
+    catch (e) {
+        winston_config_1.default.error(e);
+        res.status(500).render('pages/server-error', { error: e });
+    }
+}));
 router.post('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -53,7 +61,7 @@ router.post('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     catch (e) {
         winston_config_1.default.error(e);
-        res.status(500).render('pages/server-error');
+        res.status(500).render('pages/server-error', { error: e });
     }
 }));
 router.get('/app-download', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
