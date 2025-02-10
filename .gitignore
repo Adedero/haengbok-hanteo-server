@@ -30,3 +30,4 @@ build.css
 *.rest
 
 .env
+.env-example

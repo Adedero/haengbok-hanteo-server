@@ -4,7 +4,7 @@ import transporter from '../config/nodemailer.config'
 config()
 
 interface MailerOptions {
-  email: string
+  to_email: string
   from_email?: string
   subject?: string
   text?: string
@@ -15,13 +15,12 @@ interface MailerOptions {
 export default async function sendEmail(
   options: MailerOptions
 ): Promise<null | Error> {
-  const FROM_EMAIL = options.from_email ?? process.env.EMAIL_USER ?? 'Haengbok Hanteo'
-
   try {
     const res = await transporter.sendMail({
-      from: FROM_EMAIL,
-      to: options.email,
+      from: process.env.EMAIL_USER ?? 'info@haengbokhanteo.com',
+      to: options.to_email,
       subject: options.subject,
+      ...(options.from_email && { replyTo: [options.from_email] }),
       text: options.text ?? '',
       html: options.html ?? ''
     })

@@ -18,6 +18,7 @@ const winston_config_1 = __importDefault(require("../../config/winston.config"))
 const utils_1 = require("../../utils");
 const mailer_1 = __importDefault(require("../../utils/mailer"));
 const email_1 = require("../../templates/email");
+const __1 = require("../..");
 const router = (0, express_1.Router)();
 router.get('/', (req, res) => {
     res.render('pages/index');
@@ -33,7 +34,7 @@ router.get('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (e) {
         winston_config_1.default.error(e);
-        res.status(500).render('pages/server-error', { error: e });
+        res.status(500).render('pages/server-error', Object.assign({}, (!__1.isProductionEnv && { error: e })));
     }
 }));
 router.post('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -44,7 +45,7 @@ router.post('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, funct
             throw new Error('Missing fields found');
         }
         const error = yield (0, mailer_1.default)({
-            email: (_a = process.env.CONTACT_EMAIL) !== null && _a !== void 0 ? _a : 'info@haengbokhanteo.com',
+            to_email: (_a = process.env.EMAIL_USER) !== null && _a !== void 0 ? _a : 'info@haengbokhanteo.com',
             from_email: email.toString(),
             subject: subject === null || subject === void 0 ? void 0 : subject.toString(),
             html: (0, email_1.helpEmail)({
@@ -55,13 +56,14 @@ router.post('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, funct
             })
         });
         if (error) {
+            console.log(error);
             throw error;
         }
         res.render('pages/success');
     }
     catch (e) {
         winston_config_1.default.error(e);
-        res.status(500).render('pages/server-error', { error: e });
+        res.status(500).render('pages/server-error', Object.assign({}, (!__1.isProductionEnv && { error: e })));
     }
 }));
 router.get('/app-download', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -45,7 +45,7 @@ export const sendOtp = async (req: Request, res: Response) => {
     const text = `Your secure OTP: ${otp.value}. Note that this password expires in ${EXPIRY_TIME}`
 
     const mailError = await sendEmail({
-      email: user.email,
+      to_email: user.email,
       subject: 'Haengbok-Hanteo Account Verification',
       text
     })

@@ -13,7 +13,7 @@ export default async function contactCustomerCare (req: Request, res: Response) 
 
   try {
     const error = await sendEmail({
-      email: process.env.CONTACT_EMAIL ?? 'nathan44wilson@gmail.com',
+      to_email: process.env.EMAIL ?? 'nathan44wilson@gmail.com',
       from_email: email,
       subject,
       html: helpEmail({ name, email, message, subject })

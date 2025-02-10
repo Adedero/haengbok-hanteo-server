@@ -52,7 +52,7 @@ const sendOtp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const text = `Your secure OTP: ${otp.value}. Note that this password expires in ${EXPIRY_TIME}`;
         const mailError = yield (0, mailer_1.default)({
-            email: user.email,
+            to_email: user.email,
             subject: 'Haengbok-Hanteo Account Verification',
             text
         });

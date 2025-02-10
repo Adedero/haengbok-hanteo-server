@@ -4,7 +4,7 @@ import { isProductionEnv } from '..'
 config()
 
 const transporter = nodemailer.createTransport({
-  ...(!isProductionEnv && { service: process.env.EMAIL_SERVICE }),
+  ...(isProductionEnv && { service: process.env.EMAIL_SERVICE }),
   host: process.env.EMAIL_HOST,
   port: 465,
   secure: true,

@@ -22,9 +22,6 @@
           <p class="text-sm max-w-80 font-medium">
             <%= __('serverError') %>
           </p>
-          <p class="text-sm max-w-80 font-medium bg-red-500 p-3 rounded-lg text-white text-center">
-            <%= error %>
-          </p>
         </div>
       </section>
 
@@ -33,11 +30,17 @@
           
 
           <div class="w-full max-w-[36rem]">
-            <div class="text-lg font-semibold text-center">
+            <div class="text-lg font-semibold text-center flex flex-col items-center justify-center gap-2">
               <span class="pi pi-times-circle text-mute" style="font-size: 2rem"></span>
-              <p>
-                <%= __('somethingHappened') %>
-              </p>
+              <% if (!locals.error) { %>
+                <p class="text-sm max-w-96 font-medium bg-red-500 p-3 rounded-lg text-white text-center">
+                  <%= locals.error.message ?? locals.error %>
+                </p>
+              <% } else { %>
+                <p class="max-w-96">
+                  <%= __('somethingHappened') %>
+                </p>
+              <% } %>
             </div>
 
             <div class="mt-10 flex-center gap-2">

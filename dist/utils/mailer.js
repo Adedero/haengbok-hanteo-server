@@ -18,16 +18,9 @@ const nodemailer_config_1 = __importDefault(require("../config/nodemailer.config
 (0, dotenv_1.config)();
 function sendEmail(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a, _b, _c, _d;
-        const FROM_EMAIL = (_b = (_a = options.from_email) !== null && _a !== void 0 ? _a : process.env.EMAIL_USER) !== null && _b !== void 0 ? _b : 'Haengbok Hanteo';
+        var _a, _b, _c;
         try {
-            const res = yield nodemailer_config_1.default.sendMail({
-                from: FROM_EMAIL,
-                to: options.email,
-                subject: options.subject,
-                text: (_c = options.text) !== null && _c !== void 0 ? _c : '',
-                html: (_d = options.html) !== null && _d !== void 0 ? _d : ''
-            });
+            const res = yield nodemailer_config_1.default.sendMail(Object.assign(Object.assign({ from: (_a = process.env.EMAIL_USER) !== null && _a !== void 0 ? _a : 'info@haengbokhanteo.com', to: options.to_email, subject: options.subject }, (options.from_email && { replyTo: [options.from_email] })), { text: (_b = options.text) !== null && _b !== void 0 ? _b : '', html: (_c = options.html) !== null && _c !== void 0 ? _c : '' }));
             if (res.rejected.length > 0) {
                 throw new Error(res.response);
             }

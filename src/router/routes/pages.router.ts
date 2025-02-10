@@ -4,6 +4,7 @@ import logger from '../../config/winston.config'
 import { formatDate } from '../../utils'
 import sendEmail from "../../utils/mailer"
 import { helpEmail } from "../../templates/email";
+import { isProductionEnv } from '../..'
 
 const router = Router()
 
@@ -21,7 +22,7 @@ router.get('/contact-us', async (req, res) => {
     res.render('pages/contact', { contactAddress: settings?.contactAddress ?? 'info@haengbokhanteo.com'})
   } catch (e) {
     logger.error(e)
-    res.status(500).render('pages/server-error', { error: e })
+    res.status(500).render('pages/server-error', { ...(!isProductionEnv && { error: e }) })
   }
 })
 
@@ -33,7 +34,7 @@ router.post('/contact-us', async (req, res) => {
     }
     
     const error = await sendEmail({
-      email: process.env.CONTACT_EMAIL ?? 'info@haengbokhanteo.com',
+      to_email: process.env.EMAIL_USER ?? 'info@haengbokhanteo.com',
       from_email: email.toString(),
       subject: subject?.toString(),
       html: helpEmail({
@@ -44,12 +45,13 @@ router.post('/contact-us', async (req, res) => {
       })
     })
     if (error) {
+      console.log(error)
       throw error
     }
     res.render('pages/success')
   } catch(e) {
     logger.error(e)
-    res.status(500).render('pages/server-error', { error: e })
+    res.status(500).render('pages/server-error', { ...(!isProductionEnv && { error: e }) })
   }
 })
 

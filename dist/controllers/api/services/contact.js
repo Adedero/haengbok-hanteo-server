@@ -26,7 +26,7 @@ function contactCustomerCare(req, res) {
         const { name, email, subject, message } = req.body;
         try {
             const error = yield (0, mailer_1.default)({
-                email: (_a = process.env.CONTACT_EMAIL) !== null && _a !== void 0 ? _a : 'nathan44wilson@gmail.com',
+                to_email: (_a = process.env.EMAIL) !== null && _a !== void 0 ? _a : 'nathan44wilson@gmail.com',
                 from_email: email,
                 subject,
                 html: (0, email_1.helpEmail)({ name, email, message, subject })
