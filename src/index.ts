@@ -11,15 +11,33 @@ import path from 'node:path'
 import i18n from './i18n'
 import cookieParser from 'cookie-parser'
 import { db } from './database'
-
+import mongoose from 'mongoose'
 
 config();
 
-//init()
+export const isProductionEnv = process.env.NODE_ENV === 'production'
+
+const MONGODB_URI = process.env.MONGODB_URI || ''
+
+mongoose.connect(MONGODB_URI)
+  .then(() => {
+    console.log('MongoDB connected successfully')
+  })
+  .catch((error) => {
+    if (isProductionEnv) logger.error((error as Error).message)
+    else console.error(error)
+    process.exit(1)
+  })
+
+process.on('SIGINT', async () => {
+  await mongoose.connection.close()
+  console.log('Database connection closed due to app termination')
+  process.exit(0)
+})
+
 
 const app = express()
 const PORT = process.env.PORT || 3300
-export const isProductionEnv = process.env.NODE_ENV === 'production'
 
 
 app.set('trust proxy', 1)

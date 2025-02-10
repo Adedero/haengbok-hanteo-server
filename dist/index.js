@@ -26,11 +26,28 @@ const node_path_1 = __importDefault(require("node:path"));
 const i18n_1 = __importDefault(require("./i18n"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const database_1 = require("./database");
+const mongoose_1 = __importDefault(require("mongoose"));
 (0, dotenv_1.config)();
-//init()
+exports.isProductionEnv = process.env.NODE_ENV === 'production';
+const MONGODB_URI = process.env.MONGODB_URI || '';
+mongoose_1.default.connect(MONGODB_URI)
+    .then(() => {
+    console.log('MongoDB connected successfully');
+})
+    .catch((error) => {
+    if (exports.isProductionEnv)
+        winston_config_1.default.error(error.message);
+    else
+        console.error(error);
+    process.exit(1);
+});
+process.on('SIGINT', () => __awaiter(void 0, void 0, void 0, function* () {
+    yield mongoose_1.default.connection.close();
+    console.log('Database connection closed due to app termination');
+    process.exit(0);
+}));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3300;
-exports.isProductionEnv = process.env.NODE_ENV === 'production';
 app.set('trust proxy', 1);
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)(cors_config_1.corsOptions));
