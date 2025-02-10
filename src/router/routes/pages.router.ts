@@ -27,7 +27,7 @@ router.post('/contact-us', async (req, res) => {
     }
     
     const error = await sendEmail({
-      email: process.env.CONTACT_EMAIL ?? 'nathan44wilson@gmail.com',
+      email: process.env.CONTACT_EMAIL ?? 'info@haengbokhanteo.com',
       from_email: email.toString(),
       subject: subject?.toString(),
       html: helpEmail({

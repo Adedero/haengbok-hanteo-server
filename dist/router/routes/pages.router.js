@@ -36,7 +36,7 @@ router.post('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, funct
             throw new Error('Missing fields found');
         }
         const error = yield (0, mailer_1.default)({
-            email: (_a = process.env.CONTACT_EMAIL) !== null && _a !== void 0 ? _a : 'nathan44wilson@gmail.com',
+            email: (_a = process.env.CONTACT_EMAIL) !== null && _a !== void 0 ? _a : 'info@haengbokhanteo.com',
             from_email: email.toString(),
             subject: subject === null || subject === void 0 ? void 0 : subject.toString(),
             html: (0, email_1.helpEmail)({
