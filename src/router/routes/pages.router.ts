@@ -18,7 +18,7 @@ router.get('/about', (req, res) => {
 router.get('/contact-us', async (req, res) => {
   try {
     const settings = await Settings.findOne({}).lean()
-    res.render('pages/contact', { contactAddres: settings?.contactAddress ?? 'info@haengbokhanteo.com'})
+    res.render('pages/contact', { contactAddress: settings?.contactAddress ?? 'info@haengbokhanteo.com'})
   } catch (e) {
     logger.error(e)
     res.status(500).render('pages/server-error', { error: e })

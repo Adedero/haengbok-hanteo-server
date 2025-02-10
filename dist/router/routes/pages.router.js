@@ -29,7 +29,7 @@ router.get('/contact-us', (req, res) => __awaiter(void 0, void 0, void 0, functi
     var _a;
     try {
         const settings = yield settings_model_1.default.findOne({}).lean();
-        res.render('pages/contact', { contactAddres: (_a = settings === null || settings === void 0 ? void 0 : settings.contactAddress) !== null && _a !== void 0 ? _a : 'info@haengbokhanteo.com' });
+        res.render('pages/contact', { contactAddress: (_a = settings === null || settings === void 0 ? void 0 : settings.contactAddress) !== null && _a !== void 0 ? _a : 'info@haengbokhanteo.com' });
     }
     catch (e) {
         winston_config_1.default.error(e);
