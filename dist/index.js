@@ -45,7 +45,12 @@ app.use((req, res, next) => {
     res.locals.__ = res.__;
     res.locals.currentLocale = req.getLocale();
     const lang = req.query.lang || req.cookies.locale || "ko";
-    res.cookie("locale", lang, { maxAge: 900000, httpOnly: true });
+    res.cookie("locale", lang, {
+        maxAge: 900000,
+        httpOnly: true,
+        secure: exports.isProductionEnv, // Only use secure cookies in production
+        sameSite: exports.isProductionEnv ? 'none' : 'lax' // None for cross-site, Lax for normal use
+    });
     req.setLocale(lang);
     next();
 });
