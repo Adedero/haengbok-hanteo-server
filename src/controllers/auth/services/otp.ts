@@ -8,6 +8,7 @@ import {
 } from '../../../utils/pin-generator'
 import sendEmail from '../../../utils/mailer'
 import { ObjectId } from 'mongoose'
+import { accountVerificationEmail } from '../../../templates/email'
 
 export const sendOtp = async (req: Request, res: Response) => {
   const { email } = req.query
@@ -42,12 +43,14 @@ export const sendOtp = async (req: Request, res: Response) => {
       otp.expiresAt = setPinExpiryDate(EXPIRY_TIME)
       await otp.save()
     }
-    const text = `Your secure OTP: ${otp.value}. Note that this password expires in ${EXPIRY_TIME}`
+    //const text = `Your secure OTP: ${otp.value}. Note that this password expires in ${EXPIRY_TIME}`
+
+    const html = accountVerificationEmail({ otp: otp.value, expiry_date: EXPIRY_TIME })
 
     const mailError = await sendEmail({
       to_email: user.email,
       subject: 'Haengbok-Hanteo Account Verification',
-      text
+      html
     })
 
     if (mailError) {

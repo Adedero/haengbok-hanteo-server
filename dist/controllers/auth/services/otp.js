@@ -17,6 +17,7 @@ const use_response_1 = require("../../../utils/use-response");
 const database_1 = require("../../../database");
 const pin_generator_1 = require("../../../utils/pin-generator");
 const mailer_1 = __importDefault(require("../../../utils/mailer"));
+const email_1 = require("../../../templates/email");
 const sendOtp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.query;
     if (!email) {
@@ -50,11 +51,12 @@ const sendOtp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             otp.expiresAt = (0, pin_generator_1.setPinExpiryDate)(EXPIRY_TIME);
             yield otp.save();
         }
-        const text = `Your secure OTP: ${otp.value}. Note that this password expires in ${EXPIRY_TIME}`;
+        //const text = `Your secure OTP: ${otp.value}. Note that this password expires in ${EXPIRY_TIME}`
+        const html = (0, email_1.accountVerificationEmail)({ otp: otp.value, expiry_date: EXPIRY_TIME });
         const mailError = yield (0, mailer_1.default)({
             to_email: user.email,
             subject: 'Haengbok-Hanteo Account Verification',
-            text
+            html
         });
         if (mailError) {
             (0, use_response_1.useResponse)(res, 500, 'Could not send email. Try again later.');
