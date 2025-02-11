@@ -17,14 +17,42 @@ const use_response_1 = require("../../../utils/use-response");
 const getAll = (model) => {
     return (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { skip, limit } = (0, utils_1.parseSkipAndLimit)(req, constants_1.GLOBAL_API_LIMIT);
-        const { sort } = req.query;
-        let sortObject = {};
-        if (sort && typeof sort === 'string') {
-            const [field, order] = sort.split(',');
-            sortObject = { [field]: order === 'asc' ? 1 : -1 };
+        const { sort, where } = req.query;
+        const filter = {};
+        const sortObject = {};
+        // Handle multiple where conditions
+        if (where) {
+            const whereConditions = Array.isArray(where) ? where : [where];
+            whereConditions.forEach((condition) => {
+                if (typeof condition === 'string') {
+                    const parts = condition.split(',');
+                    if (parts.length >= 2) {
+                        const [field, ...value] = parts;
+                        filter[field] = value.join(','); // Handle values containing commas
+                    }
+                }
+            });
+        }
+        // Handle multiple sort conditions safely
+        if (sort) {
+            const sortFields = Array.isArray(sort) ? sort : [sort];
+            sortFields.forEach((condition) => {
+                if (typeof condition === 'string') {
+                    const parts = condition.split(',');
+                    if (parts.length === 2) {
+                        const [field, order] = parts;
+                        sortObject[field] = order === 'asc' ? 1 : -1;
+                    }
+                }
+            });
         }
         try {
-            const data = yield database_1.db[model].find().skip(skip).limit(limit).sort(sortObject).lean();
+            const data = yield database_1.db[model]
+                .find(filter)
+                .skip(skip)
+                .limit(limit)
+                .sort(sortObject)
+                .lean();
             (0, use_response_1.useResponse)(res, 200, { items: data });
         }
         catch (error) {

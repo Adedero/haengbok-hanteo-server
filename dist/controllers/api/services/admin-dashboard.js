@@ -15,15 +15,15 @@ const database_1 = require("../../../database");
 function getAdminDashboard(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const [settings, transactionCount, propertyCount, user, lastTransaction, lastProperty] = yield Promise.all([
+            const [settings, transactionCount, propertyCount, userCount, lastTransactions, lastProperties] = yield Promise.all([
                 database_1.db.Settings.findOne({}).lean(),
                 database_1.db.Transaction.estimatedDocumentCount(),
                 database_1.db.Property.estimatedDocumentCount(),
-                database_1.db.User.findOne({}).lean(),
-                database_1.db.Transaction.findOne({}).sort({ transactionDate: -1 }).lean(),
-                database_1.db.Property.findOne({}).sort({ createdAt: -1 }).lean()
+                database_1.db.User.estimatedDocumentCount(),
+                database_1.db.Transaction.find({}).sort({ transactionDate: -1 }).limit(3).lean(),
+                database_1.db.Property.find({}).sort({ createdAt: -1 }).limit(3).lean()
             ]);
-            (0, use_response_1.useResponse)(res, 200, { settings, transactionCount, propertyCount, user, lastTransaction, lastProperty });
+            (0, use_response_1.useResponse)(res, 200, { settings, transactionCount, propertyCount, userCount, lastTransactions, lastProperties });
         }
         catch (error) {
             (0, use_response_1.useResponse)(res, 500, error.message);

@@ -25,7 +25,10 @@ router.route('/properties/:id')
     .put((0, helpers_1.update)('Property'))
     .delete((0, helpers_1.deleteOne)('Property'));
 router.get('/properties-count', (0, helpers_1.count)('Property'));
+router.get('/users', (0, helpers_1.getAll)('User'));
+router.get('/users-count', (0, helpers_1.count)('User'));
 router.route('/users/:id')
+    .get((0, helpers_1.getById)('User'))
     .put((0, helpers_1.update)('User'));
 router.put('/user-password-reset/:id', api_controller_1.default.resetUserPassword);
 router.put('/settings', helpers_1.updateSettings);

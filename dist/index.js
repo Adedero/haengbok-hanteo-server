@@ -73,6 +73,13 @@ app.use((req, res, next) => {
 });
 app.set('view engine', 'ejs');
 app.set('views', node_path_1.default.resolve('src/views'));
+/*
+app.use((req, res, next) => {
+  const clientUrl = req.get('origin') || 'Unknown Origin'
+  console.log('Client URL (Origin):', clientUrl)
+  next()
+})
+*/
 (0, router_1.default)(app);
 app.post('/listings', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listings = req.body.data;
