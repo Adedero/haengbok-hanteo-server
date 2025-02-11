@@ -11,10 +11,12 @@ router.post('/contact', ApiController.contactCustomerCare)
 router.route('/transactions')
   .get(getAll('Transaction' as 'User'))
   .post(create('Transaction' as 'User'))
+
 router.route('/transactions/:id')
   .get(getById('Transaction' as 'User'))
   .put(update('Transaction' as 'User'))
   .delete(deleteOne('Transaction' as 'User'))
+
 router.get('/transactions-count', count('Transaction' as 'User'))
 
 
@@ -22,14 +24,20 @@ router.get('/transactions-count', count('Transaction' as 'User'))
 router.route('/properties')
   .get(getAll('Property' as 'User'))
   .post(ApiController.createProperty)
+
 router.route('/properties/:id')
   .get(getById('Property' as 'User'))
   .put(update('Property' as 'User'))
   .delete(deleteOne('Property' as 'User'))
+
 router.get('/properties-count', count('Property' as 'User'))
 
 
+router.get('/users', getAll('User'))
+router.get('/users-count', count('User'))
+
 router.route('/users/:id')
+  .get(getById('User'))
   .put(update('User'))
 
 router.put('/user-password-reset/:id', ApiController.resetUserPassword)

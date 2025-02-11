@@ -9,17 +9,47 @@ type DbModel = 'User'
 export const getAll = (model: DbModel) => {
   return async (req: Request, res: Response) => {
     const { skip, limit } = parseSkipAndLimit(req, GLOBAL_API_LIMIT)
-    const { sort } = req.query
+    const { sort, where } = req.query
 
-    let sortObject = {}
+    const filter: Record<string, unknown> = {}
+    const sortObject: Record<string, 1 | -1> = {}
 
-    if (sort && typeof sort === 'string') {
-      const [field, order] = sort.split(',')
-      sortObject = { [field]: order === 'asc' ? 1 : -1 }
+    // Handle multiple where conditions
+    if (where) {
+      const whereConditions = Array.isArray(where) ? where : [where]
+      whereConditions.forEach((condition) => {
+        if (typeof condition === 'string') {
+          const parts = condition.split(',')
+          if (parts.length >= 2) {
+            const [field, ...value] = parts
+            filter[field] = value.join(',') // Handle values containing commas
+          }
+        }
+      })
     }
-    
+
+    // Handle multiple sort conditions safely
+    if (sort) {
+      const sortFields = Array.isArray(sort) ? sort : [sort]
+      sortFields.forEach((condition) => {
+        if (typeof condition === 'string') {
+          const parts = condition.split(',')
+          if (parts.length === 2) {
+            const [field, order] = parts
+            sortObject[field] = order === 'asc' ? 1 : -1
+          }
+        }
+      })
+    }
+
     try {
-      const data = await db[model].find().skip(skip).limit(limit).sort(sortObject).lean()
+      const data = await db[model]
+        .find(filter)
+        .skip(skip)
+        .limit(limit)
+        .sort(sortObject)
+        .lean()
+
       useResponse(res, 200, { items: data })
     } catch (error) {
       useResponse(res, 500, (error as Error).message)

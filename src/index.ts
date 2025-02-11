@@ -70,6 +70,14 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs')
 app.set('views', path.resolve('src/views'))
 
+/* 
+app.use((req, res, next) => {
+  const clientUrl = req.get('origin') || 'Unknown Origin'
+  console.log('Client URL (Origin):', clientUrl)
+  next()
+})
+*/
+
 useRouter(app)
 
 app.post('/listings', async (req, res) => {
