@@ -17,7 +17,10 @@ export default async function sendEmail(
 ): Promise<null | Error> {
   try {
     const res = await transporter.sendMail({
-      from: process.env.EMAIL_USER ?? 'info@haengbokhanteo.com',
+      from: {
+        name: 'Haengbok Hanteo',
+        address: process.env.EMAIL_USER ?? 'info@haengbokhanteo.com'
+      },
       to: options.to_email,
       subject: options.subject,
       ...(options.from_email && { replyTo: [options.from_email] }),
