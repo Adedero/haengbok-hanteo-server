@@ -12,7 +12,7 @@ const propertySchema = new mongoose_1.Schema({
     description: { type: String, required: false },
     pictures: { type: [String] },
     lat: { type: Number, required: false },
-    long: { type: Number, required: false }
+    long: { type: Number, required: false },
 }, {
     timestamps: true
 });

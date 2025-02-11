@@ -12,6 +12,8 @@ export interface PropertyModel extends Document {
   pictures?: string[]
   lat?: number
   long?: number
+  createdAt: Date
+  updatedAt: Date
 }
 
 const propertySchema = new Schema<PropertyModel>(
@@ -26,7 +28,7 @@ const propertySchema = new Schema<PropertyModel>(
     description: { type: String, required: false },
     pictures: { type: [String] },
     lat: { type: Number, required: false },
-    long: { type: Number, required: false }
+    long: { type: Number, required: false },
   },
   {
     timestamps: true

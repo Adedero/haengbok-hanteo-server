@@ -28,7 +28,8 @@ router.route('/properties')
 router.route('/properties/:id')
   .get(getById('Property' as 'User'))
   .put(update('Property' as 'User'))
-  .delete(deleteOne('Property' as 'User'))
+  .delete(ApiController.deleteProperty)
+  //.delete(deleteOne('Property' as 'User'))
 
 router.get('/properties-count', count('Property' as 'User'))
 

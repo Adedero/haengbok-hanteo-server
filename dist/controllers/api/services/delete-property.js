@@ -9,23 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = createProperty;
+exports.default = deleteProperty;
 const use_response_1 = require("../../../utils/use-response");
 const database_1 = require("../../../database");
-function createProperty(req, res) {
+function deleteProperty(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const listing = yield database_1.db.Listing.findOne({ deleted: false }).lean();
-            if (!listing) {
-                (0, use_response_1.useResponse)(res, 400, 'No properties to add. Try again later');
+            //Delete the property
+            //Bring back the listing
+            const { id } = req.params;
+            if (!id) {
+                (0, use_response_1.useResponse)(res, 400, 'Property ID is required');
                 return;
             }
-            const property = new database_1.db.Property(listing);
-            property.createdAt = new Date();
-            property.updatedAt = new Date();
+            const property = yield database_1.db.Property.findById(id).lean();
+            if (!property) {
+                (0, use_response_1.useResponse)(res, 400, 'Property not found');
+                return;
+            }
             yield Promise.all([
-                property.save(),
-                database_1.db.Listing.updateOne({ _id: listing._id }, { deleted: true }),
+                database_1.db.Property.deleteOne({ _id: property._id }),
+                database_1.db.Listing.updateOne({ name: property.name }, { deleted: false })
             ]);
             (0, use_response_1.useResponse)(res, 200, { property });
         }

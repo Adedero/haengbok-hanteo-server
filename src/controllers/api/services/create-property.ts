@@ -10,6 +10,9 @@ export default async function createProperty (req: Request, res: Response) {
       return
     }
     const property = new db.Property(listing)
+    property.createdAt = new Date()
+    property.updatedAt = new Date()
+    
     await Promise.all([
       property.save(),
       db.Listing.updateOne({ _id: listing._id }, { deleted: true }),
