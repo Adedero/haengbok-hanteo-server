@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.accountVerificationEmail = exports.helpEmail = void 0;
+exports.transactionNotificationEmail = exports.accountVerificationEmail = exports.helpEmail = void 0;
 const helpEmail = ({ name, email, subject, message }) => {
     return `
   <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{ subject }}</title><style>body{font-family:Arial,sans-serif;margin:0;padding:0;color:#333;background-color:#f9f9f9;line-height:1.6;display:grid;place-content:center}.container{width:80dvw;margin:20px auto;padding:20px;background-color:#fff;border:1px solid #ddd;border-radius:8px}.header{text-align:center;border-bottom:1px solid #eee;margin-bottom:20px;padding-bottom:10px}.header h1{font-size:20px;margin:0;color:#444}.content{padding:10px 0}.content p{margin:10px 0}.footer{margin-top:20px;text-align:center;font-size:12px;color:#777}</style></head><body><div class="container"><div class="header"><h1>${subject || "Help Request"}</h1></div><div class="content"><p><strong>Name: </strong>${name}</p><p><strong>Email: </strong>${email}</p><p><strong>Message: </strong></p><p>${message}</p></div><div class="footer"><p>This message was sent from your website's help page.</p></div></div></body></html>`;
@@ -103,3 +103,139 @@ const accountVerificationEmail = ({ otp, expiry_date }) => {
   </html>`;
 };
 exports.accountVerificationEmail = accountVerificationEmail;
+const transactionNotificationEmail = ({ transaction }) => (`<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Haengbok Hanteo Transaction Alert</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        body {
+            background-color: #f6f6f6;
+            color: #333;
+            padding: 1rem;
+            font-family: Inter, Verdana, Arial, sans-serif;
+        }
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        section {
+            background-color: #fff;
+            border: 1px solid rgb(0,0,0,0.2);
+            border-radius: 0.5rem;
+            padding: 1rem 1.25rem;
+            margin-top: 1.25rem;
+        }
+        
+        footer {
+            background-color: #EBEAFA;
+            color: #2D2AB4;
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+    </style>
+  </head>
+ <body>
+      <main>
+          <header style="display: flex; flex-direction: column; align-items: center; justify-content: center">
+            <img src="https://haengbokhanteo.com/img/logo.png" alt="logo" width="35" />
+            <div style="font-weight: 500; text-align: center;">
+                <p>행복한터</p>
+                <p>Haengbok Hanteo</p>
+            </div>
+          </header>
+          
+          <section>
+              <div style="text-align: center; display: grid; place-content: center;">
+                <h4 style="font-size: 1.5rem">New Transaction Alert</h4>  
+              </div>
+              
+              
+              <div style="margin-top: 1rem">
+                  <p style="color: #4643D3; font-weight: 700; font-size: 2rem">₩${transaction.amount}</p>
+              </div>
+              
+              <div style="margin-top: 1rem; display: grid; gap: 8px">
+                  <div>
+                      <p>Transaction Type</p>
+                      <p style="font-weight: 600">${transaction.type}</p>
+                  </div>
+                  
+                  <div>
+                      <p>Status</p>
+                      <p style="font-weight: 600">${transaction.status}</p>
+                  </div>
+                  
+                  <div>
+                      <p>Charges</p>
+                      <p style="font-weight: 600">₩${transaction.charges}</p>
+                  </div>
+                  
+                  <div>
+                      <p>Amount Paid</p>
+                      <p style="font-weight: 600">₩${transaction.amountPaid}</p>
+                  </div>
+                  
+                  <div>
+                      <p>Status</p>
+                      <p style="font-weight: 600">${transaction.status}</p>
+                  </div>
+                  
+                  <div>
+                      <p>Recipient Name</p>
+                      <p style="font-weight: 600">${transaction.recipientName}</p>
+                  </div>
+                  
+                  <div>
+                      <p>Transaction Ref</p>
+                      <p style="font-weight: 600">${transaction.transactionRef}</p>
+                  </div>
+                  
+                  <div>
+                      <p>Date</p>
+                      <p style="font-weight: 600">${new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+}).format(new Date(transaction.transactionDate))}</p>
+                  </div>
+                  
+                  <div>
+                      <p>Description</p>
+                      <p style="font-weight: 600">${transaction.description}</p>
+                  </div>
+              </div>
+          </section>
+      </main>
+      
+      <footer>
+           <p>
+              이 메일은 행복한터에서 자동으로 생성된 이메일이며, 회신이 불가능합니다.
+          </p>
+          <p style="font-size: 0.75rem; margin-top: 5px">
+              This is an automatic email generated by Haengbok Hanteo, and does not accept replies.
+          </p>
+          
+          <div style="margin-top: 1rem; display: flex; gap: 5px; align-items: center; justify-content: center; width: 100%">
+              <img src="https://haengbokhanteo.com/img/logo.png" alt="logo" width="16" style="display: block" />
+              <a href="https://haengbokhanteo.com" style="display: block">
+                  Haengbok Hanteo
+              </a>
+          </div>
+         
+      </footer>
+  </body>
+</html>`);
+exports.transactionNotificationEmail = transactionNotificationEmail;
