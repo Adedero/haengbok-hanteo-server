@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { useResponse } from "../../../utils/use-response";
 import { db } from "../../../database";
+import sendEmail from "../../../utils/mailer";
+import { transactionNotificationEmail } from "../../../templates/email";
 
 export const createTransaction = async (req: Request, res: Response) => {
   const data = req.body
@@ -30,6 +32,27 @@ export const createTransaction = async (req: Request, res: Response) => {
 
     // Save the transaction
     await txn.save()
+
+    //send email,
+    //send notifications to users
+    await sendEmail({
+      to_email: process.env.EMAIL_USER ?? 'info@haengbokhanteo.com',
+      subject: 'New Transaction',
+      html: transactionNotificationEmail({ transaction: txn.toObject() })
+    })
+
+    const users = await db.User.find()
+
+    await Promise.all(
+      users.map((user) => 
+        db.Notification.create({
+          user: user._id,
+          title: 'New Transaction',
+          message: `A new ${txn.type} transaction of ₩${txn.amount} was made.`,
+          isRead: false
+        })
+      )
+    )
 
     useResponse(res, 200, { item: txn, availableBalance: updatedSettings?.availableBalance ?? 0 })
   } catch (error) {
