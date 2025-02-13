@@ -6,12 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const api_controller_1 = __importDefault(require("../../controllers/api/api.controller"));
 const express_1 = require("express");
 const helpers_1 = require("./../../controllers/api/services/helpers");
+const transaction_service_1 = require("../../controllers/api/services/transaction.service");
+const user_service_1 = require("../../controllers/api/services/user.service");
 const router = (0, express_1.Router)();
 router.post('/contact', api_controller_1.default.contactCustomerCare);
 //Admin routes
 router.route('/transactions')
     .get((0, helpers_1.getAll)('Transaction'))
-    .post((0, helpers_1.create)('Transaction'));
+    .post(transaction_service_1.createTransaction);
 router.route('/transactions/:id')
     .get((0, helpers_1.getById)('Transaction'))
     .put((0, helpers_1.update)('Transaction'))
@@ -30,7 +32,8 @@ router.get('/users', (0, helpers_1.getAll)('User'));
 router.get('/users-count', (0, helpers_1.count)('User'));
 router.route('/users/:id')
     .get((0, helpers_1.getById)('User'))
-    .put((0, helpers_1.update)('User'));
+    .put((0, helpers_1.update)('User'))
+    .delete(user_service_1.deleteUser);
 router.put('/user-password-reset/:id', api_controller_1.default.resetUserPassword);
 router.put('/settings', helpers_1.updateSettings);
 router.get('/admin-dashboard', api_controller_1.default.getAdminDashboard);
