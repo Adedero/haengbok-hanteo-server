@@ -59,6 +59,10 @@ function login(req, res) {
             (0, use_response_1.useResponse)(res, 400, 'Password is required');
             return;
         }
+        if (password.length < 6) {
+            (0, use_response_1.useResponse)(res, 400, 'Password must have at least 6 characters');
+            return;
+        }
         if (!email) {
             (0, use_response_1.useResponse)(res, 400, 'Email is required');
             return;

@@ -54,6 +54,10 @@ function changePassword(req, res) {
             (0, use_response_1.useResponse)(res, 400, 'Enter your current and new passwords');
             return;
         }
+        if (password.newValue.length < 6) {
+            (0, use_response_1.useResponse)(res, 400, 'Password must have at least 6 characters');
+            return;
+        }
         if (password.newValue === password.current) {
             (0, use_response_1.useResponse)(res, 400, 'Password is the same');
             return;

@@ -11,6 +11,10 @@ export default async function changePassword (req: Request, res: Response) {
     useResponse(res, 400, 'Enter your current and new passwords')
     return
   }
+  if (password.newValue.length < 6) {
+    useResponse(res, 400, 'Password must have at least 6 characters')
+    return
+  }
   if (password.newValue === password.current) {
     useResponse(res, 400, 'Password is the same')
     return

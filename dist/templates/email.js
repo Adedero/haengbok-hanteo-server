@@ -29,7 +29,7 @@ const accountVerificationEmail = ({ otp, expiry_date }) => {
               display: flex;
               flex-direction: column;
               align-items: center;
-              justify-contents: center;
+              justify-content: center;
               gap: 0.5rem;
           }
           section {
@@ -53,7 +53,7 @@ const accountVerificationEmail = ({ otp, expiry_date }) => {
     </head>
    <body>
         <main>
-            <header>
+            <header style="display: flex; flex-direction: column; align-items: center; justify-content: center">
               <img src="https://haengbokhanteo.com/img/logo.png" alt="logo" width="35" />
               <div style="font-weight: 500; text-align: center;">
                   <p>행복한터</p>
@@ -92,8 +92,8 @@ const accountVerificationEmail = ({ otp, expiry_date }) => {
             </p>
             
             <div style="margin-top: 1rem; display: flex; gap: 5px; align-items: center; justify-content: center; width: 100%">
-                <img src="https://haengbokhanteo.com/img/logo.png" alt="logo" width="16" />
-                <a href="https://haengbokhanteo.com">
+                <img src="https://haengbokhanteo.com/img/logo.png" alt="logo" width="16" style="display: block" />
+                <a href="https://haengbokhanteo.com" style="display: block">
                     Haengbok Hanteo
                 </a>
             </div>

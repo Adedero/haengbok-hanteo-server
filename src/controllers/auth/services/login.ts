@@ -16,6 +16,10 @@ export default async function login(req: Request, res: Response) {
     useResponse(res, 400, 'Password is required')
     return
   }
+  if (password.length < 6) {
+    useResponse(res, 400, 'Password must have at least 6 characters')
+    return
+  }
   if (!email) {
     useResponse(res, 400, 'Email is required')
     return

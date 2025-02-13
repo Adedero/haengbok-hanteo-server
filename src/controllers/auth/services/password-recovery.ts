@@ -29,8 +29,9 @@ export const resetPassword = async (req: Request, res: Response) => {
     useResponse(res, 400, 'Something went wrong. Try again later')
     return
   }
-  if (!password || password.length !== 6) {
-    useResponse(res, 400, 'Invalid password')
+  const pwd = password?.toString()
+  if (!pwd || (pwd && pwd.length < 6)) {
+    useResponse(res, 400, 'Password must have at least 6 characters')
     return
   }
   try {
@@ -39,7 +40,7 @@ export const resetPassword = async (req: Request, res: Response) => {
       useResponse(res, 400, 'Acount not found. Register to continue')
       return
     }
-    const hash = await argon.hash(password.toString())
+    const hash = await argon.hash(pwd)
     user.password = hash
     await user.save()
 

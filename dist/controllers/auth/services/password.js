@@ -53,8 +53,8 @@ function setPassword(req, res) {
             (0, use_response_1.useResponse)(res, 400, 'User not verified');
             return;
         }
-        if (!password || password.length !== 6) {
-            (0, use_response_1.useResponse)(res, 400, 'Invalid password');
+        if (!password || password.length < 6) {
+            (0, use_response_1.useResponse)(res, 400, 'Password must have at least 6 characters');
             return;
         }
         try {

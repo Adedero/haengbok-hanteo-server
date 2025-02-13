@@ -9,8 +9,8 @@ export default async function setPassword(req: Request, res: Response) {
     useResponse(res, 400, 'User not verified')
     return
   }
-  if (!password || password.length !== 6) {
-    useResponse(res, 400, 'Invalid password')
+  if (!password || password.length < 6) {
+    useResponse(res, 400, 'Password must have at least 6 characters')
     return
   }
   try {

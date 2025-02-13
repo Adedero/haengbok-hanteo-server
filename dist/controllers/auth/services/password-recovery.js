@@ -73,8 +73,9 @@ const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         (0, use_response_1.useResponse)(res, 400, 'Something went wrong. Try again later');
         return;
     }
-    if (!password || password.length !== 6) {
-        (0, use_response_1.useResponse)(res, 400, 'Invalid password');
+    const pwd = password === null || password === void 0 ? void 0 : password.toString();
+    if (!pwd || (pwd && pwd.length < 6)) {
+        (0, use_response_1.useResponse)(res, 400, 'Password must have at least 6 characters');
         return;
     }
     try {
@@ -83,7 +84,7 @@ const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             (0, use_response_1.useResponse)(res, 400, 'Acount not found. Register to continue');
             return;
         }
-        const hash = yield argon.hash(password.toString());
+        const hash = yield argon.hash(pwd);
         user.password = hash;
         yield user.save();
         (0, use_response_1.useResponse)(res, 200, { success: true });
