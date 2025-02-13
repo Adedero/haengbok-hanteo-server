@@ -1,6 +1,8 @@
 import ApiController from '../../controllers/api/api.controller'
 import { Router } from 'express'
-import { count, create, deleteOne, getAll, getById, update, updateSettings } from './../../controllers/api/services/helpers';
+import { count, deleteOne, getAll, getById, update, updateSettings } from './../../controllers/api/services/helpers';
+import { createTransaction } from '../../controllers/api/services/transaction.service';
+import { deleteUser } from '../../controllers/api/services/user.service';
 
 const router = Router()
 
@@ -10,7 +12,7 @@ router.post('/contact', ApiController.contactCustomerCare)
 //Admin routes
 router.route('/transactions')
   .get(getAll('Transaction' as 'User'))
-  .post(create('Transaction' as 'User'))
+  .post(createTransaction)
 
 router.route('/transactions/:id')
   .get(getById('Transaction' as 'User'))
@@ -40,6 +42,7 @@ router.get('/users-count', count('User'))
 router.route('/users/:id')
   .get(getById('User'))
   .put(update('User'))
+  .delete(deleteUser)
 
 router.put('/user-password-reset/:id', ApiController.resetUserPassword)
 
