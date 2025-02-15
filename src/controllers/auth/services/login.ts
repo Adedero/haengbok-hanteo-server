@@ -64,7 +64,7 @@ export async function useLogin(
     if (!isMatch) {
       throw new Error('Password is not correct')
     }
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' })
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' })
     user.token = token
     user.verified = true
     user.lastLogin = new Date(Date.now())
