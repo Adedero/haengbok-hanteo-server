@@ -12,13 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTransaction = void 0;
+exports.sendTransactionNotifications = exports.createTransaction = void 0;
 const use_response_1 = require("../../../utils/use-response");
 const database_1 = require("../../../database");
 const mailer_1 = __importDefault(require("../../../utils/mailer"));
 const email_1 = require("../../../templates/email");
+const transaction_event_1 = require("../../../events/transaction.event");
+const winston_config_1 = __importDefault(require("../../../config/winston.config"));
 const createTransaction = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a;
     const data = req.body;
     if (!data) {
         return (0, use_response_1.useResponse)(res, 400, 'No transaction data provided');
@@ -38,24 +40,42 @@ const createTransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
         ).lean();
         // Save the transaction
         yield txn.save();
-        //send email,
-        //send notifications to users
-        yield (0, mailer_1.default)({
-            to_email: (_a = process.env.EMAIL_USER) !== null && _a !== void 0 ? _a : 'info@haengbokhanteo.com',
-            subject: 'New Transaction',
-            html: (0, email_1.transactionNotificationEmail)({ transaction: txn.toObject() })
-        });
-        const users = yield database_1.db.User.find();
-        yield Promise.all(users.map((user) => database_1.db.Notification.create({
-            user: user._id,
-            title: 'New Transaction',
-            message: `A new ${txn.type} transaction of ₩${txn.amount} was made.`,
-            isRead: false
-        })));
-        (0, use_response_1.useResponse)(res, 200, { item: txn, availableBalance: (_b = updatedSettings === null || updatedSettings === void 0 ? void 0 : updatedSettings.availableBalance) !== null && _b !== void 0 ? _b : 0 });
+        transaction_event_1.txnEmitter.emit('created', txn);
+        (0, use_response_1.useResponse)(res, 200, { item: txn, availableBalance: (_a = updatedSettings === null || updatedSettings === void 0 ? void 0 : updatedSettings.availableBalance) !== null && _a !== void 0 ? _a : 0 });
     }
     catch (error) {
         (0, use_response_1.useResponse)(res, 500, error.message);
     }
 });
 exports.createTransaction = createTransaction;
+const sendTransactionNotifications = (txn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield database_1.db.User.find();
+        const send = (user) => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                yield Promise.all([
+                    (0, mailer_1.default)({
+                        to_email: user.email,
+                        subject: 'New Transaction',
+                        html: (0, email_1.transactionNotificationEmail)({ transaction: txn.toObject() })
+                    }),
+                    database_1.db.Notification.create({
+                        user: user._id,
+                        title: 'New Transaction',
+                        message: `A new ${txn.type} transaction of ₩${txn.amount.toLocaleString()} was made.`,
+                        isRead: false
+                    })
+                ]);
+            }
+            catch (err) {
+                winston_config_1.default.error(`Error sending notification to ${user.email}: ${err.message}`, err);
+            }
+        });
+        yield Promise.all(users.map((user) => send(user)));
+    }
+    catch (err) {
+        winston_config_1.default.error(`Error sending transaction notifications: ${err.message}`, err);
+        throw err;
+    }
+});
+exports.sendTransactionNotifications = sendTransactionNotifications;

@@ -3,6 +3,10 @@ import { useResponse } from "../../../utils/use-response";
 import { db } from "../../../database";
 import sendEmail from "../../../utils/mailer";
 import { transactionNotificationEmail } from "../../../templates/email";
+import { txnEmitter } from "../../../events/transaction.event";
+import { TransactionModel } from "../../../models/transaction.model";
+import { UserModel } from "../../../models/user.model";
+import logger from "../../../config/winston.config";
 
 export const createTransaction = async (req: Request, res: Response) => {
   const data = req.body
@@ -33,29 +37,42 @@ export const createTransaction = async (req: Request, res: Response) => {
     // Save the transaction
     await txn.save()
 
-    //send email,
-    //send notifications to users
-    await sendEmail({
-      to_email: process.env.EMAIL_USER ?? 'info@haengbokhanteo.com',
-      subject: 'New Transaction',
-      html: transactionNotificationEmail({ transaction: txn.toObject() })
-    })
-
-    const users = await db.User.find()
-
-    await Promise.all(
-      users.map((user) => 
-        db.Notification.create({
-          user: user._id,
-          title: 'New Transaction',
-          message: `A new ${txn.type} transaction of ₩${txn.amount} was made.`,
-          isRead: false
-        })
-      )
-    )
+    txnEmitter.emit('created', txn)
 
     useResponse(res, 200, { item: txn, availableBalance: updatedSettings?.availableBalance ?? 0 })
   } catch (error) {
     useResponse(res, 500, (error as Error).message)
   }
 }
+
+
+export const sendTransactionNotifications = async (txn: TransactionModel) => {
+  try {
+    const users = await db.User.find();
+
+    const send = async (user: UserModel) => {
+      try {
+        await Promise.all([
+          sendEmail({
+            to_email: user.email,
+            subject: 'New Transaction',
+            html: transactionNotificationEmail({ transaction: txn.toObject() })
+          }),
+          db.Notification.create({
+            user: user._id,
+            title: 'New Transaction',
+            message: `A new ${txn.type} transaction of ₩${txn.amount.toLocaleString()} was made.`,
+            isRead: false
+          })
+        ]);
+      } catch (err) {
+        logger.error(`Error sending notification to ${user.email}: ${(err as Error).message}`, err);
+      }
+    };
+
+    await Promise.all(users.map((user) => send(user)));
+  } catch (err) {
+    logger.error(`Error sending transaction notifications: ${(err as Error).message}`, err);
+    throw err;
+  }
+};

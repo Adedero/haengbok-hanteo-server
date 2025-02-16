@@ -5,6 +5,7 @@ import { UserModel } from '../../../models/user.model'
 import * as jwt from 'jsonwebtoken'
 import { useResponse } from '../../../utils/use-response'
 import { db } from '../../../database'
+import logger from '../../../config/winston.config'
 
 config()
 
@@ -12,6 +13,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'jwt-secret'
 
 export default async function login(req: Request, res: Response) {
   const { id, email, password } = req.body
+
   if (!password) {
     useResponse(res, 400, 'Password is required')
     return
@@ -55,14 +57,48 @@ export default async function login(req: Request, res: Response) {
   }
 }
 
+//Automatic login
+export async function automaticLogin (req: Request, res: Response) {
+  const { token } = req.body
+  if (!token) {
+    useResponse(res, 400, 'Token is required')
+    return
+  }
+  let result: { id: string }
+  try {
+    result = jwt.verify(token, JWT_SECRET) as { id: string }
+  } catch (error) {
+    logger.error(error)
+    useResponse(res, 400, 'Invalid JWT Token')
+    return
+  }
+
+  if (!result || !result.id) {
+    useResponse(res, 400, 'Invalid JWT Token')
+    return
+  }
+
+  const user = await db.User.findById(result.id)
+  if (!user) {
+    useResponse(res, 400, 'User not found')
+    return
+  }
+
+  const authUser = getAuthUser(user)
+  useResponse(res, 200, { user: authUser })
+}
+
+
 export async function useLogin(
   user: UserModel,
-  password: string
+  password?: string
 ): Promise<[Error | null, Record<string, unknown> | null]> {
   try {
-    const isMatch = await argon.verify(user.password, password)
-    if (!isMatch) {
-      throw new Error('Password is not correct')
+    if (password) {
+      const isMatch = await argon.verify(user.password, password)
+      if (!isMatch) {
+        throw new Error('Password is not correct')
+      }
     }
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' })
     user.token = token

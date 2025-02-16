@@ -8,6 +8,7 @@ const express_1 = require("express");
 const router = (0, express_1.Router)();
 router.post('/register', auth_controller_1.default.register);
 router.post('/login', auth_controller_1.default.login);
+router.post('/login/automatic', auth_controller_1.default.automaticLogin);
 router.get('/account/confirm', auth_controller_1.default.confirmAccount);
 router.post('/account/otp', auth_controller_1.default.sendOtp);
 router.post('/account/verify', auth_controller_1.default.verifyOtp);

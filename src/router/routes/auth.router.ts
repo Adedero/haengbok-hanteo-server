@@ -5,6 +5,7 @@ const router = Router()
 
 router.post('/register', AuthController.register)
 router.post('/login', AuthController.login)
+router.post('/login/automatic', AuthController.automaticLogin)
 
 router.get('/account/confirm', AuthController.confirmAccount)
 router.post('/account/otp', AuthController.sendOtp)

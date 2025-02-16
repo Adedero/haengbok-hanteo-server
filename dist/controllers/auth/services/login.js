@@ -41,15 +41,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAuthUser = void 0;
 exports.default = login;
+exports.automaticLogin = automaticLogin;
 exports.useLogin = useLogin;
 const dotenv_1 = require("dotenv");
 const argon = __importStar(require("argon2"));
 const jwt = __importStar(require("jsonwebtoken"));
 const use_response_1 = require("../../../utils/use-response");
 const database_1 = require("../../../database");
+const winston_config_1 = __importDefault(require("../../../config/winston.config"));
 (0, dotenv_1.config)();
 const JWT_SECRET = process.env.JWT_SECRET || 'jwt-secret';
 function login(req, res) {
@@ -93,12 +98,44 @@ function login(req, res) {
         }
     });
 }
+//Automatic login
+function automaticLogin(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { token } = req.body;
+        if (!token) {
+            (0, use_response_1.useResponse)(res, 400, 'Token is required');
+            return;
+        }
+        let result;
+        try {
+            result = jwt.verify(token, JWT_SECRET);
+        }
+        catch (error) {
+            winston_config_1.default.error(error);
+            (0, use_response_1.useResponse)(res, 400, 'Invalid JWT Token');
+            return;
+        }
+        if (!result || !result.id) {
+            (0, use_response_1.useResponse)(res, 400, 'Invalid JWT Token');
+            return;
+        }
+        const user = yield database_1.db.User.findById(result.id);
+        if (!user) {
+            (0, use_response_1.useResponse)(res, 400, 'User not found');
+            return;
+        }
+        const authUser = (0, exports.getAuthUser)(user);
+        (0, use_response_1.useResponse)(res, 200, { user: authUser });
+    });
+}
 function useLogin(user, password) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const isMatch = yield argon.verify(user.password, password);
-            if (!isMatch) {
-                throw new Error('Password is not correct');
+            if (password) {
+                const isMatch = yield argon.verify(user.password, password);
+                if (!isMatch) {
+                    throw new Error('Password is not correct');
+                }
             }
             const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '3d' });
             user.token = token;
