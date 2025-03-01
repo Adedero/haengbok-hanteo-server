@@ -168,6 +168,8 @@ export const updateSettings = async (req: Request, res: Response) => {
   delete data.updatedAt
   delete data.__v
 
+  data.availableBalance = data.availableBalance ?? 0
+
   try {
     const settings = await db.Settings.findOneAndUpdate({}, data, { new: true })
     useResponse(res, 200, { settings })

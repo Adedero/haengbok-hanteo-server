@@ -164,6 +164,7 @@ const update = (model) => {
 };
 exports.update = update;
 const updateSettings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const data = req.body;
     if (!data) {
         (0, use_response_1.useResponse)(res, 400, 'No data was provided');
@@ -172,6 +173,7 @@ const updateSettings = (req, res) => __awaiter(void 0, void 0, void 0, function*
     delete data.createdAt;
     delete data.updatedAt;
     delete data.__v;
+    data.availableBalance = (_a = data.availableBalance) !== null && _a !== void 0 ? _a : 0;
     try {
         const settings = yield database_1.db.Settings.findOneAndUpdate({}, data, { new: true });
         (0, use_response_1.useResponse)(res, 200, { settings });

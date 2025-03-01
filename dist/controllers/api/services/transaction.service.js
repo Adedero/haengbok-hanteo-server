@@ -22,7 +22,7 @@ const winston_config_1 = __importDefault(require("../../../config/winston.config
 const createTransaction = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const data = req.body;
-    if (!data) {
+    if (!data || Object.keys(data).length === 0) {
         return (0, use_response_1.useResponse)(res, 400, 'No transaction data provided');
     }
     try {
@@ -33,18 +33,21 @@ const createTransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
             yield txn.save();
             return (0, use_response_1.useResponse)(res, 200, { item: txn });
         }
-        // Determine the increment/decrement value
-        const adder = type === 'deposit' ? amountPaid : -amount;
-        // Update available balance in a single atomic operation
-        const updatedSettings = yield database_1.db.Settings.findOneAndUpdate({}, { $inc: { availableBalance: adder } }, { new: true } // Return the updated document
-        ).lean();
-        // Save the transaction
+        // Determine increment/decrement
+        const adder = type === 'deposit' ? amountPaid : type === 'withdrawal' ? -amount : 0;
+        // Fetch or create settings using upsert
+        const settings = yield database_1.db.Settings.findOneAndUpdate({}, { $setOnInsert: { availableBalance: 0, hideBalance: false, lang: 'ko', darkMode: false, contactAddress: '', appDetails: { name: 'Haengbok Hanteo', version: '7.0.1', releaseDate: new Date(), isNewVersionAvailable: false } } }, { upsert: true, new: true });
+        // Update available balance
+        settings.availableBalance = Math.max(((_a = settings.availableBalance) !== null && _a !== void 0 ? _a : 0) + adder, 0);
+        yield settings.save();
+        // Save transaction
         yield txn.save();
+        // Emit event (optional: use await if async listeners exist)
         transaction_event_1.txnEmitter.emit('created', txn);
-        (0, use_response_1.useResponse)(res, 200, { item: txn, availableBalance: (_a = updatedSettings === null || updatedSettings === void 0 ? void 0 : updatedSettings.availableBalance) !== null && _a !== void 0 ? _a : 0 });
+        return (0, use_response_1.useResponse)(res, 200, { item: txn, availableBalance: settings.availableBalance });
     }
     catch (error) {
-        (0, use_response_1.useResponse)(res, 500, error.message);
+        return (0, use_response_1.useResponse)(res, 500, error.message);
     }
 });
 exports.createTransaction = createTransaction;
