@@ -10,6 +10,6 @@ const UserController = {
     getDashboard: get_dashboard_1.default,
     changePassword: change_password_1.default,
     clearUserNotifications: notifications_1.clearUserNotifications,
-    updateNotifications: notifications_1.updateNotifications
+    updateNotifications: notifications_1.updateNotifications,
 };
 exports.default = UserController;

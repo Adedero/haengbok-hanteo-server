@@ -1,4 +1,4 @@
-import { getAll, countAndGetAll, getById, updateSettings } from '../../controllers/api/services/helpers'
+import { getAll, countAndGetAll, getById, update, updateSettings } from '../../controllers/api/services/helpers'
 import UserController from '../../controllers/user/user.controller'
 import { Router } from 'express'
 
@@ -27,5 +27,10 @@ router.route('/settings')
   .put(updateSettings)
 
 router.put('/account/change-password', UserController.changePassword)
+
+
+router.put('/kyc/:id', update('User'))
+
+router.put('/users/:id', update('User'))
 
 export default router

@@ -23,4 +23,6 @@ router.delete('/notifications/clear', user_controller_1.default.clearUserNotific
 router.route('/settings')
     .put(helpers_1.updateSettings);
 router.put('/account/change-password', user_controller_1.default.changePassword);
+router.put('/kyc/:id', (0, helpers_1.update)('User'));
+router.put('/users/:id', (0, helpers_1.update)('User'));
 exports.default = router;

@@ -18,7 +18,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return;
     }
     const data = {
-        name: req.body.email,
+        name: req.body.name,
         email: req.body.email,
         birthday: req.body.birthday,
         location: { country: req.body.country.name },

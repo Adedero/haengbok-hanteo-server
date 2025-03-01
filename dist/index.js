@@ -52,7 +52,7 @@ app.set('trust proxy', 1);
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)(cors_config_1.corsOptions));
 app.use(express_1.default.static('public'));
-app.use(express_1.default.json());
+app.use(express_1.default.json({ limit: '10mb' }));
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, serve_favicon_1.default)(node_path_1.default.resolve('public', 'favicon.ico')));
 app.use('/primeicons', express_1.default.static(node_path_1.default.resolve('node_modules', 'primeicons')));

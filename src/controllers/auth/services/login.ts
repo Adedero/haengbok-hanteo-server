@@ -127,7 +127,8 @@ export const getAuthUser = (user: UserModel) => {
     location: user.location,
     picture: user.picture,
     lastLogin: user.lastLogin,
-    password: !!user.password
+    password: !!user.password,
+    kyc: user.kyc || null
   }
   return authUser
 }

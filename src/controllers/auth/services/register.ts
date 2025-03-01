@@ -8,7 +8,7 @@ const register = async (req: Request, res: Response) => {
     return
   }
   const data = {
-    name: req.body.email,
+    name: req.body.name,
     email: req.body.email,
     birthday: req.body.birthday,
     location: { country: req.body.country.name },
