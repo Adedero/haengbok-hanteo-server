@@ -36,6 +36,7 @@ const settingsSchema = new Schema<SettingsModel>(
       type: Number,
       required: true,
       min: 0, // Balance must be non-negative
+      default: 0
     },
     hideBalance: {
       type: Boolean,
@@ -44,8 +45,9 @@ const settingsSchema = new Schema<SettingsModel>(
     },
     lang: {
       type: String,
-      enum: ['en', 'ko', 'th'], // Restrict to predefined options
+      enum: ['en', 'ko'], // Restrict to predefined options
       required: true,
+      default: 'ko'
     },
     darkMode: {
       type: Boolean,
@@ -54,6 +56,7 @@ const settingsSchema = new Schema<SettingsModel>(
     },
     contactAddress: {
       type: String,
+      default: ''
     },
     appDetails: {
       type: appDetailsSchema, // Reference the subschema

@@ -8,40 +8,46 @@ import { TransactionModel } from "../../../models/transaction.model";
 import { UserModel } from "../../../models/user.model";
 import logger from "../../../config/winston.config";
 
+
 export const createTransaction = async (req: Request, res: Response) => {
-  const data = req.body
-  if (!data) {
-    return useResponse(res, 400, 'No transaction data provided')
+  const data = req.body;
+  if (!data || Object.keys(data).length === 0) {
+    return useResponse(res, 400, 'No transaction data provided');
   }
 
   try {
-    const txn = new db.Transaction(data)
-    const { type, status, amount, amountPaid } = txn
+    const txn = new db.Transaction(data);
+    const { type, status, amount, amountPaid } = txn;
 
     // Save failed transactions immediately
     if (status === 'failed') {
-      await txn.save()
-      return useResponse(res, 200, { item: txn })
+      await txn.save();
+      return useResponse(res, 200, { item: txn });
     }
 
-    // Determine the increment/decrement value
-    const adder: number = type === 'deposit' ? amountPaid : -amount
+    // Determine increment/decrement
+    const adder = type === 'deposit' ? amountPaid : type === 'withdrawal' ? -amount : 0;
 
-    // Update available balance in a single atomic operation
-    const updatedSettings = await db.Settings.findOneAndUpdate(
+    // Fetch or create settings using upsert
+    const settings = await db.Settings.findOneAndUpdate(
       {}, 
-      { $inc: { availableBalance: adder } }, 
-      { new: true } // Return the updated document
-    ).lean()
+      { $setOnInsert: { availableBalance: 0, hideBalance: false, lang: 'ko', darkMode: false, contactAddress: '', appDetails: { name: 'Haengbok Hanteo', version: '7.0.1', releaseDate: new Date(), isNewVersionAvailable: false } } },
+      { upsert: true, new: true }
+    );
 
-    // Save the transaction
-    await txn.save()
+    // Update available balance
+    settings.availableBalance = Math.max((settings.availableBalance ?? 0) + adder, 0);
+    await settings.save();
 
-    txnEmitter.emit('created', txn)
+    // Save transaction
+    await txn.save();
 
-    useResponse(res, 200, { item: txn, availableBalance: updatedSettings?.availableBalance ?? 0 })
+    // Emit event (optional: use await if async listeners exist)
+    txnEmitter.emit('created', txn);
+
+    return useResponse(res, 200, { item: txn, availableBalance: settings.availableBalance });
   } catch (error) {
-    useResponse(res, 500, (error as Error).message)
+    return useResponse(res, 500, (error as Error).message);
   }
 }
 
